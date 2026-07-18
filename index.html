@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050816" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Focus C.E.R.O." />
+  <title>Focus C.E.R.O.</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.svg" />
+  <link rel="icon" href="icons/icon-192.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">FOCUS C.E.R.O.</p>
+        <h1 id="pageTitle">Hoy</h1>
+      </div>
+      <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema">◐</button>
+    </header>
+
+    <main>
+      <!-- HOY -->
+      <section class="screen active" id="screen-hoy">
+        <div class="welcome-card glass">
+          <div>
+            <p id="todayDate" class="muted"></p>
+            <h2>¡Buen día, Nahiara! 👋</h2>
+            <p class="muted">Tu disciplina de hoy construye tu futuro.</p>
+          </div>
+          <div class="progress-ring" id="progressRing">
+            <span id="progressPercent">0%</span>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card glass">
+            <span class="stat-icon blue">✓</span>
+            <div>
+              <small>Actividades</small>
+              <strong id="activityCount">0 de 0</strong>
+            </div>
+          </article>
+          <article class="stat-card glass">
+            <span class="stat-icon cyan">◷</span>
+            <div>
+              <small>Tiempo disponible</small>
+              <strong>4h 20m</strong>
+            </div>
+          </article>
+          <article class="stat-card glass">
+            <span class="stat-icon red">🔥</span>
+            <div>
+              <small>Racha actual</small>
+              <strong id="streakCount">7 días</strong>
+            </div>
+          </article>
+        </div>
+
+        <section class="section-card glass next-card">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">PRÓXIMA ACTIVIDAD</span>
+              <h3 id="nextTitle">Física</h3>
+              <p id="nextSubtitle" class="muted">Estudio profundo · 16:40–18:00</p>
+            </div>
+            <button class="play-main" id="startNextBtn">▶</button>
+          </div>
+        </section>
+
+        <section class="section-card glass">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">HOY</span>
+              <h3>Plan del día</h3>
+            </div>
+            <button class="small-btn" id="openTaskModalBtn">+ Agregar</button>
+          </div>
+          <div id="todayActivities" class="timeline"></div>
+        </section>
+
+        <div class="quick-grid">
+          <button class="quick-action glass" data-action="late">
+            <span>⚠️</span>
+            <strong>Estoy atrasada</strong>
+            <small>Reordena prioridades</small>
+          </button>
+          <button class="quick-action glass" data-action="tired">
+            <span>🌙</span>
+            <strong>Estoy cansada</strong>
+            <small>Reduce la carga</small>
+          </button>
+          <button class="quick-action glass" data-action="notime">
+            <span>⏱️</span>
+            <strong>No tengo tiempo</strong>
+            <small>Plan mínimo de 40 min</small>
+          </button>
+        </div>
+      </section>
+
+      <!-- PLAN -->
+      <section class="screen" id="screen-plan">
+        <section class="section-card glass">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">SEMANA ACTUAL</span>
+              <h2>Plan semanal</h2>
+            </div>
+            <button class="small-btn" id="resetWeekBtn">Restablecer</button>
+          </div>
+          <div class="week-tabs" id="weekTabs"></div>
+          <div id="weekPlan" class="week-plan"></div>
+        </section>
+      </section>
+
+      <!-- TAREAS -->
+      <section class="screen" id="screen-tareas">
+        <section class="section-card glass">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">ORGANIZACIÓN</span>
+              <h2>Tareas</h2>
+            </div>
+            <button class="fab-inline" id="openTaskModalBtn2">＋</button>
+          </div>
+
+          <div class="filter-row">
+            <button class="chip active" data-filter="all">Todas</button>
+            <button class="chip" data-filter="pending">Pendientes</button>
+            <button class="chip" data-filter="done">Completadas</button>
+          </div>
+
+          <div id="taskList" class="task-list"></div>
+        </section>
+      </section>
+
+      <!-- ESTUDIAR -->
+      <section class="screen" id="screen-estudiar">
+        <section class="focus-panel glass">
+          <span class="section-kicker">SESIÓN C.E.R.O.</span>
+          <h2 id="focusSubject">Física</h2>
+          <p class="muted">Estudio profundo</p>
+
+          <div class="timer-ring" id="timerRing">
+            <div>
+              <strong id="timerDisplay">45:00</strong>
+              <span>Tiempo restante</span>
+            </div>
+          </div>
+
+          <div class="timer-actions">
+            <button class="primary-btn" id="timerStartBtn">▶ Iniciar</button>
+            <button class="secondary-btn" id="timerResetBtn">↻ Reiniciar</button>
+          </div>
+
+          <div class="duration-row">
+            <button class="chip duration active" data-minutes="25">25m</button>
+            <button class="chip duration" data-minutes="40">40m</button>
+            <button class="chip duration" data-minutes="45">45m</button>
+            <button class="chip duration" data-minutes="60">60m</button>
+          </div>
+        </section>
+
+        <section class="section-card glass">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">MÉTODO</span>
+              <h3>Pasos C.E.R.O.</h3>
+            </div>
+          </div>
+          <div class="zero-steps">
+            <button class="zero-step active" data-step="C"><b>C</b><span>Comprender</span></button>
+            <button class="zero-step" data-step="E"><b>E</b><span>Extraer</span></button>
+            <button class="zero-step" data-step="R"><b>R</b><span>Resolver</span></button>
+            <button class="zero-step" data-step="O"><b>O</b><span>Observar</span></button>
+          </div>
+          <textarea id="sessionNotes" rows="5" placeholder="Escribe tu objetivo, dudas, fórmulas o errores..."></textarea>
+          <button class="primary-btn full" id="saveSessionBtn">Guardar sesión</button>
+        </section>
+      </section>
+
+      <!-- PROGRESO -->
+      <section class="screen" id="screen-progreso">
+        <div class="stats-grid two">
+          <article class="stat-card glass">
+            <span class="stat-icon blue">◷</span>
+            <div><small>Tiempo de estudio</small><strong id="studyTimeStat">0 min</strong></div>
+          </article>
+          <article class="stat-card glass">
+            <span class="stat-icon green">✓</span>
+            <div><small>Tareas completadas</small><strong id="completedStat">0</strong></div>
+          </article>
+          <article class="stat-card glass">
+            <span class="stat-icon purple">◎</span>
+            <div><small>Sesiones C.E.R.O.</small><strong id="sessionsStat">0</strong></div>
+          </article>
+          <article class="stat-card glass">
+            <span class="stat-icon red">🔥</span>
+            <div><small>Racha</small><strong>7 días</strong></div>
+          </article>
+        </div>
+
+        <section class="section-card glass">
+          <span class="section-kicker">TIEMPO POR MATERIA</span>
+          <h3>Distribución semanal</h3>
+          <div class="bar-chart">
+            <div><span>Matemática</span><i style="--value:82%"></i><b>6h 30m</b></div>
+            <div><span>Física</span><i style="--value:70%"></i><b>4h 15m</b></div>
+            <div><span>Historia</span><i style="--value:45%"></i><b>2h 30m</b></div>
+            <div><span>Inglés</span><i style="--value:38%"></i><b>2h 00m</b></div>
+          </div>
+        </section>
+
+        <section class="section-card glass">
+          <span class="section-kicker">HÁBITOS</span>
+          <h3>Progreso de hábitos</h3>
+          <div id="habitList" class="habit-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-screen="hoy"><span>⌂</span><small>Hoy</small></button>
+      <button class="nav-item" data-screen="plan"><span>▣</span><small>Plan</small></button>
+      <button class="nav-item" data-screen="tareas"><span>☑</span><small>Tareas</small></button>
+      <button class="nav-item" data-screen="estudiar"><span>◉</span><small>Estudiar</small></button>
+      <button class="nav-item" data-screen="progreso"><span>⌁</span><small>Progreso</small></button>
+    </nav>
+  </div>
+
+  <!-- MODAL DE TAREA -->
+  <div class="modal" id="taskModal" aria-hidden="true">
+    <div class="modal-card glass">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">NUEVA TAREA</span>
+          <h3>Agregar actividad</h3>
+        </div>
+        <button class="icon-btn" id="closeTaskModalBtn">✕</button>
+      </div>
+
+      <form id="taskForm">
+        <label>
+          Título
+          <input id="taskTitle" required placeholder="Ej: Guía de ondas" />
+        </label>
+        <label>
+          Materia
+          <select id="taskSubject">
+            <option>Física</option>
+            <option>Matemática NS</option>
+            <option>Economía NS</option>
+            <option>Lenguaje</option>
+            <option>Inglés</option>
+            <option>PAES Historia</option>
+            <option>CAS</option>
+            <option>Ejercicio</option>
+          </select>
+        </label>
+        <div class="form-grid">
+          <label>
+            Hora
+            <input id="taskTime" type="time" value="16:00" />
+          </label>
+          <label>
+            Duración
+            <input id="taskDuration" type="number" min="5" value="45" />
+          </label>
+        </div>
+        <label>
+          Prioridad
+          <select id="taskPriority">
+            <option value="high">Alta</option>
+            <option value="medium" selected>Media</option>
+            <option value="low">Baja</option>
+          </select>
+        </label>
+        <button class="primary-btn full" type="submit">Guardar tarea</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
